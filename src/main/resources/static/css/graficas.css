@@ -1,0 +1,206 @@
+/* ==================================================================
+   graficas.css
+   Estilos del area de graficas: el lienzo, sus controles y la leyenda.
+   ================================================================== */
+
+.grafica {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-3);
+}
+
+.grafica__cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--espacio-3);
+}
+
+.grafica__controles {
+    display: flex;
+    gap: var(--espacio-2);
+    flex-wrap: wrap;
+}
+
+/* --- El lienzo -----------------------------------------------------
+   El canvas tiene una relacion de aspecto fija para que la grafica no
+   se deforme al cambiar el tamano de la ventana. */
+
+.grafica__lienzo-caja {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-md);
+    background-color: var(--grafica-fondo);
+    overflow: hidden;
+}
+
+.grafica__lienzo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+}
+
+/* El visor 3D se arrastra para girar el solido, y eso se anuncia
+   cambiando el cursor. */
+.grafica__lienzo--tresd {
+    cursor: grab;
+}
+
+.grafica__lienzo--tresd:active {
+    cursor: grabbing;
+}
+
+/* --- Botones del visor 3D ------------------------------------------
+   La columna de botones redondos de GeoGebra: vista inicial, acercar,
+   alejar y pantalla completa. Flotan sobre el lienzo, abajo a la
+   derecha, donde no tapan el solido. */
+
+.visor3d__controles {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.visor3d__boton {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: 1px solid var(--color-borde);
+    border-radius: 50%;
+    background-color: var(--grafica-fondo);
+    color: var(--color-texto-suave);
+    box-shadow: var(--sombra-md);
+    cursor: pointer;
+}
+
+.visor3d__boton:hover {
+    color: var(--color-texto);
+}
+
+.visor3d__boton svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* En pantalla completa la caja deja de tener proporcion fija y ocupa
+   toda la pantalla; el visor se vuelve a encuadrar al entrar. */
+.grafica__lienzo-caja:fullscreen {
+    width: 100vw;
+    height: 100vh;
+    aspect-ratio: auto;
+    border: 0;
+    border-radius: 0;
+}
+
+/* --- Lectura de coordenadas ----------------------------------------
+   Recuadro que sigue al puntero mostrando el punto de la curva sobre
+   el que esta. */
+
+.grafica__lectura {
+    position: absolute;
+    top: var(--espacio-3);
+    left: var(--espacio-3);
+    padding: var(--espacio-1) var(--espacio-3);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-sm);
+    background-color: var(--color-superficie);
+    font-family: var(--fuente-mono);
+    font-size: var(--texto-xs);
+    color: var(--color-texto-suave);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--transicion);
+}
+
+.grafica__lectura--visible {
+    opacity: 0.95;
+}
+
+/* --- Leyenda -------------------------------------------------------- */
+
+.leyenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espacio-4);
+    font-size: var(--texto-sm);
+}
+
+.leyenda__entrada {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-2);
+    color: var(--color-texto-suave);
+}
+
+.leyenda__muestra {
+    width: 1.5rem;
+    height: 3px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.leyenda__muestra--f { background-color: var(--grafica-curva-f); }
+.leyenda__muestra--g { background-color: var(--grafica-curva-g); }
+
+.leyenda__muestra--region {
+    height: 0.9rem;
+    background-color: var(--grafica-relleno);
+    border: 1px solid var(--grafica-curva-f);
+}
+
+.leyenda__muestra--rectangulos {
+    height: 0.9rem;
+    background-color: var(--grafica-rectangulo);
+    border: 1px solid var(--grafica-rectangulo-borde);
+}
+
+.leyenda__muestra--corte {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background-color: var(--grafica-corte);
+}
+
+/* --- Controles del visor 3D ------------------------------------------ */
+
+.controles-3d {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--espacio-3);
+    padding: var(--espacio-3);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-md);
+    background-color: var(--color-superficie-alt);
+}
+
+.control-deslizante {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-1);
+}
+
+.control-deslizante label {
+    margin: 0;
+    font-size: var(--texto-xs);
+}
+
+.control-deslizante input[type="range"] {
+    width: 100%;
+    accent-color: var(--color-solidos);
+    cursor: pointer;
+}
+
+.control-deslizante__valor {
+    font-family: var(--fuente-mono);
+    font-size: var(--texto-xs);
+    color: var(--color-texto-tenue);
+}

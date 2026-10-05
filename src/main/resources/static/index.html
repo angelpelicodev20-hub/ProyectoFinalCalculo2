@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="es" data-tema="claro">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Proyecto Final de Cálculo II</title>
+    <meta name="description"
+          content="Resuelve área bajo la curva, área entre dos curvas y sólidos de revolución, con gráfica y procedimiento paso a paso.">
+    <link rel="stylesheet" href="/css/estilos.css">
+    <script type="module" src="/js/main.js"></script>
+</head>
+
+<body data-pagina="inicio">
+
+    <header class="barra-superior">
+        <a class="barra-superior__marca" href="/">
+            <span class="barra-superior__simbolo" aria-hidden="true">∫</span>
+            Cálculo II
+        </a>
+
+        <nav class="barra-superior__navegacion" aria-label="Secciones">
+            <a class="barra-superior__enlace" href="/pages/resolver.html">Resolver problema</a>
+            <a class="barra-superior__enlace" href="/pages/area-bajo-curva.html">Área bajo la curva</a>
+            <a class="barra-superior__enlace" href="/pages/area-entre-curvas.html">Área entre curvas</a>
+            <a class="barra-superior__enlace" href="/pages/solidos-revolucion.html">Sólidos de revolución</a>
+            <a class="barra-superior__enlace" href="/pages/calculadora.html">Calculadora</a>
+            <a class="barra-superior__enlace" href="/pages/ayuda.html">Ayuda</a>
+            <button class="boton-tema" id="botonTema" type="button" title="Cambiar tema">☾</button>
+        </nav>
+    </header>
+
+    <main class="contenedor">
+
+        <section class="encabezado-tema">
+            <h1>Cálculo de áreas y volúmenes por integración</h1>
+            <p class="encabezado-tema__descripcion">
+                La aplicación resuelve el ejercicio como se hace en clase: encuentra la
+                primitiva, aplica la regla de Barrow y escribe el procedimiento completo,
+                explicando en cada paso qué se hace y por qué. Además dibuja la región o el
+                sólido con los mismos datos que usó para calcular.
+            </p>
+            <p class="encabezado-tema__descripcion">
+                Todo el cálculo lo hace el programa: no consulta ningún servicio externo.
+            </p>
+        </section>
+
+        <!-- ---------------- TRES MODOS DE USO ---------------- -->
+        <section>
+            <h2>¿Cómo quiere trabajar?</h2>
+
+            <nav class="menu-temas" aria-label="Modos de uso">
+
+                <a class="tarjeta-tema" href="/pages/resolver.html">
+                    <span class="tarjeta-tema__numero" aria-hidden="true">1</span>
+                    <h3>Escribir el problema</h3>
+                    <p>
+                        Copie el enunciado tal como está en la hoja. La aplicación identifica
+                        el tema y el método, extrae las funciones, los límites y el eje, y
+                        llena con ellos los campos del ejercicio para que usted los revise
+                        antes de resolver.
+                    </p>
+                    <code class="tarjeta-tema__formula">"Encuentre el volumen al rotar f(x)…"</code>
+                </a>
+
+                <a class="tarjeta-tema tarjeta-tema--curvas" href="/pages/area-bajo-curva.html">
+                    <span class="tarjeta-tema__numero" aria-hidden="true">2</span>
+                    <h3>Ya sé de qué tema es</h3>
+                    <p>
+                        Elija el tema abajo y llene los datos usted mismo. Es también el modo
+                        para comprobar un ejercicio que ya resolvió a mano: introduzca lo que
+                        usted planteó y compare su procedimiento con el de la aplicación.
+                    </p>
+                    <code class="tarjeta-tema__formula">Funciones + límites + eje</code>
+                </a>
+
+                <a class="tarjeta-tema tarjeta-tema--solidos" href="/pages/calculadora.html">
+                    <span class="tarjeta-tema__numero" aria-hidden="true">3</span>
+                    <h3>Solo una cuenta</h3>
+                    <p>
+                        Para las operaciones sueltas que aparecen en medio de un ejercicio:
+                        evaluar una función en un punto, comprobar cuánto vale una expresión,
+                        desarrollar un producto. Aquí la respuesta es un número.
+                    </p>
+                    <code class="tarjeta-tema__formula">2 + 3·4, π/3, √16, f(3)</code>
+                </a>
+
+            </nav>
+        </section>
+
+        <!-- ---------------- LOS TRES TEMAS ---------------- -->
+        <section style="margin-top: 2.5rem;">
+            <h2>Los tres temas</h2>
+
+            <nav class="menu-temas" aria-label="Elegir tema">
+
+                <a class="tarjeta-tema" href="/pages/area-bajo-curva.html">
+                    <h3>Área bajo la curva</h3>
+                    <p>
+                        El área encerrada entre una función y el eje X, entre dos rectas
+                        verticales. Se resuelve por integración directa, y se pueden mostrar
+                        los rectángulos de Riemann para ver de dónde nace la integral.
+                    </p>
+                    <code class="tarjeta-tema__formula">A = ∫ desde a hasta b de f(x) dx</code>
+                </a>
+
+                <a class="tarjeta-tema tarjeta-tema--curvas" href="/pages/area-entre-curvas.html">
+                    <h3>Área entre dos curvas</h3>
+                    <p>
+                        El área de la región encerrada entre dos funciones. Si las curvas se
+                        cruzan, la aplicación parte la integral en los puntos de corte para
+                        que los tramos no se cancelen entre sí.
+                    </p>
+                    <code class="tarjeta-tema__formula">A = ∫ desde a hasta b de [f(x) − g(x)] dx</code>
+                </a>
+
+                <a class="tarjeta-tema tarjeta-tema--solidos" href="/pages/solidos-revolucion.html">
+                    <h3>Sólidos de revolución</h3>
+                    <p>
+                        El volumen del sólido que se forma al girar una región alrededor de una
+                        recta, por discos, arandelas o capas cilíndricas. El método se deduce
+                        midiendo la región, y el sólido se puede girar con el ratón.
+                    </p>
+                    <code class="tarjeta-tema__formula">V = π ∫ desde a hasta b de [R(x)]² dx</code>
+                </a>
+
+            </nav>
+        </section>
+
+        <section class="tarjeta" style="margin-top: 2.5rem;">
+            <h2 class="tarjeta__titulo">Si no conoce los límites</h2>
+            <p>
+                En los tres temas hay una casilla <strong>Buscar los límites</strong>. Al
+                marcarla, la aplicación los obtiene de los puntos de corte —igualando las dos
+                curvas, o buscando dónde la curva cruza el eje— y le muestra el planteamiento
+                completo del que salieron, para que pueda comprobarlo a mano.
+            </p>
+            <p>
+                Lo que el enunciado no diga, la aplicación no lo inventa: se lo señala como
+                dato faltante y espera a que usted lo complete.
+            </p>
+            <p>
+                En la <a href="/pages/ayuda.html">página de ayuda</a> está la lista completa de
+                funciones que se pueden escribir, la explicación de cada método y los tres
+                modos de uso con ejemplos.
+            </p>
+        </section>
+
+    </main>
+
+    <footer class="pie-pagina">
+        <p>Universidad Mariano Gálvez de Guatemala — Facultad de Ingeniería en Sistemas de Información</p>
+        <p>Cálculo II, sección B — Ing. Víctor Gómez</p>
+    </footer>
+
+</body>
+</html>
