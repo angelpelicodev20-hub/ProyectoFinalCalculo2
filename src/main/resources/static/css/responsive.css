@@ -1,0 +1,115 @@
+/* ==================================================================
+   responsive.css
+   Ajustes para pantallas pequenas.
+
+   La aplicacion se disena primero para una pantalla de computadora,
+   que es donde se usara en clase, y aqui se adapta a tabletas y
+   telefonos. El cambio principal es pasar de dos columnas a una:
+   el formulario arriba y los resultados debajo.
+   ================================================================== */
+
+/* --- Tabletas y pantallas medianas -------------------------------- */
+
+@media (max-width: 1100px) {
+
+    .contenido {
+        grid-template-columns: 1fr;
+    }
+
+    /* En una sola columna el formulario no debe quedarse fijo: al
+       hacerlo taparia los resultados que estan justo debajo. */
+    .panel-formulario {
+        position: static;
+    }
+
+    .grafica__lienzo-caja {
+        aspect-ratio: 16 / 11;
+    }
+}
+
+/* --- Telefonos ----------------------------------------------------- */
+
+@media (max-width: 700px) {
+
+    html {
+        font-size: 15px;
+    }
+
+    .contenedor {
+        padding: var(--espacio-4) var(--espacio-3);
+    }
+
+    .barra-superior {
+        flex-wrap: wrap;
+        padding: var(--espacio-3);
+        gap: var(--espacio-2);
+    }
+
+    .barra-superior__navegacion {
+        width: 100%;
+        margin-left: 0;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: var(--espacio-1);
+    }
+
+    .barra-superior__enlace {
+        white-space: nowrap;
+    }
+
+    .tarjeta {
+        padding: var(--espacio-4);
+    }
+
+    /* Con la pantalla en vertical, una grafica ancha se ve diminuta;
+       conviene acercarla al cuadrado. */
+    .grafica__lienzo-caja {
+        aspect-ratio: 4 / 3;
+    }
+
+    .fila {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .teclado-matematico {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .resultado__valor {
+        font-size: var(--texto-2xl);
+    }
+
+    /* Las tablas anchas se desplazan de lado en lugar de romper la
+       pagina y obligar a desplazarla entera. */
+    .tabla-desplazable {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tabla-desplazable table {
+        min-width: 520px;
+    }
+}
+
+/* --- Pantallas muy pequenas ------------------------------------------ */
+
+@media (max-width: 420px) {
+
+    .teclado-matematico {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .menu-temas {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- Pantallas muy anchas --------------------------------------------- */
+
+@media (min-width: 1600px) {
+
+    :root {
+        --ancho-panel: 420px;
+    }
+}

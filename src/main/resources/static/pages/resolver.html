@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="es" data-tema="claro">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Resolver un problema — Cálculo II</title>
+    <link rel="stylesheet" href="/css/estilos.css">
+    <script type="module" src="/js/main.js"></script>
+</head>
+
+<body data-pagina="resolver">
+
+    <header class="barra-superior">
+        <a class="barra-superior__marca" href="/">
+            <span class="barra-superior__simbolo" aria-hidden="true">∫</span>
+            Cálculo II
+        </a>
+        <nav class="barra-superior__navegacion" aria-label="Secciones">
+            <a class="barra-superior__enlace" href="/pages/resolver.html">Resolver problema</a>
+            <a class="barra-superior__enlace" href="/pages/area-bajo-curva.html">Área bajo la curva</a>
+            <a class="barra-superior__enlace" href="/pages/area-entre-curvas.html">Área entre curvas</a>
+            <a class="barra-superior__enlace" href="/pages/solidos-revolucion.html">Sólidos de revolución</a>
+            <a class="barra-superior__enlace" href="/pages/calculadora.html">Calculadora</a>
+            <a class="barra-superior__enlace" href="/pages/ayuda.html">Ayuda</a>
+            <button class="boton-tema" id="botonTema" type="button" title="Cambiar tema">☾</button>
+        </nav>
+    </header>
+
+    <main class="contenedor">
+
+        <section class="encabezado-tema">
+            <h1>Resolver un problema</h1>
+            <p class="encabezado-tema__descripcion">
+                Escriba el ejercicio tal como aparece en el enunciado. La aplicación lo
+                interpreta, identifica el tema y el método, extrae las funciones, los límites
+                y el eje, y llena con ellos los campos de <strong>Datos del ejercicio</strong>.
+                Después usted revisa esos datos, corrige lo que haga falta y resuelve.
+            </p>
+        </section>
+
+        <div id="mensajes" class="oculto"></div>
+
+        <!-- ---------------- PASO 1: ENUNCIADO ---------------- -->
+        <section class="tarjeta">
+            <h2 class="tarjeta__titulo">1. Escriba el problema</h2>
+
+            <div class="campo">
+                <label for="enunciado">Enunciado</label>
+                <textarea class="campo__control" id="enunciado" rows="3"
+                          spellcheck="false"
+                          placeholder="Encuentre el volumen del sólido que se genera al rotar f(x) = -x^2+4 y g(x) = 2x+1 sobre el eje x en [0,1]"></textarea>
+                <div class="campo__ayuda">
+                    Puede escribirlo con sus palabras. No hace falta una redacción exacta.
+                </div>
+            </div>
+
+            <div class="pastillas" style="margin: 0.75rem 0;">
+                <button class="pastilla" type="button"
+                        data-ejemplo="Encuentre el volumen del sólido que se genera al rotar f(x) = -x^2+4 y g(x) = 2x +1 sobre el eje x en [0,1]">
+                    Volumen con dos curvas
+                </button>
+                <button class="pastilla" type="button"
+                        data-ejemplo="Calcule el área bajo la curva f(x) = x^2 en [0,1]">
+                    Área bajo la curva
+                </button>
+                <button class="pastilla" type="button"
+                        data-ejemplo="Calcule el área de la región limitada por f(x) = x y g(x) = x^2">
+                    Área entre curvas, sin límites
+                </button>
+                <button class="pastilla" type="button"
+                        data-ejemplo="Hallar el volumen generado en la rotación del área formada alrededor del eje X aplicando método de anillos: y = x³, y = x²">
+                    Anillos, sin límites escritos
+                </button>
+                <button class="pastilla" type="button"
+                        data-ejemplo="Hallar el volumen generado por la rotación limitada por y = 4x - x² y la ordenada 2.">
+                    "La ordenada 2"
+                </button>
+                <button class="pastilla" type="button"
+                        data-ejemplo="Hallar el volumen generado en la rotación del área formada alrededor del eje X aplicando el método de capas cilíndricas. Defina R como la región acotada por la gráfica de f(x) = 3x - x² y el eje X sobre el intervalo [0,2].">
+                    Capas cilíndricas pedidas
+                </button>
+                <button class="pastilla" type="button"
+                        data-ejemplo="Encontrar el volumen generado al girar sobre el eje x la región encerrada por las parábolas y = x ^2 , y^2 = 8x">
+                    Parábola sin despejar
+                </button>
+                <button class="pastilla" type="button"
+                        data-ejemplo="Encontrar el volumen generado por las gráficas x = y^2 , x = y + 6 haciendo rotar el eje y">
+                    Curvas x = g(y)
+                </button>
+                <button class="pastilla" type="button"
+                        data-ejemplo="Calcular el área de la región comprendida entre y = x^3 y y = x">
+                    Curvas que se cruzan
+                </button>
+                <button class="pastilla" type="button"
+                        data-ejemplo="Calcule el volumen de y = x^2 + 1 al girarlo alrededor del eje X">
+                    Enunciado incompleto
+                </button>
+            </div>
+
+            <button class="boton boton--principal" id="botonAnalizar" type="button">
+                Analizar el enunciado
+            </button>
+        </section>
+
+        <!-- ---------------- PASO 2: DATOS ---------------- -->
+        <section class="tarjeta oculto" id="panelDatos" style="margin-top: 1.5rem;">
+            <h2 class="tarjeta__titulo">2. Datos del ejercicio</h2>
+
+            <div id="interpretacion"></div>
+
+            <p class="campo__ayuda" style="margin-top: 1rem;">
+                Estos datos los dedujo la aplicación. Revíselos y corrija cualquiera que no
+                corresponda: lo que se resuelve es lo que hay en estos campos.
+            </p>
+
+            <form id="formularioDatos" novalidate>
+                <div class="columna" style="margin-top: 1rem;">
+
+                    <div class="campo">
+                        <label for="tema">Tema</label>
+                        <select class="campo__control" id="tema">
+                            <option value="">Sin determinar</option>
+                            <option value="AREA_BAJO_CURVA">Área bajo la curva</option>
+                            <option value="AREA_ENTRE_CURVAS">Área entre dos curvas</option>
+                            <option value="VOLUMEN_SOLIDO">Volumen de sólidos de revolución</option>
+                        </select>
+                    </div>
+
+                    <div class="campo" id="grupoVariable">
+                        <label for="variable">Variable de integración</label>
+                        <select class="campo__control" id="variable">
+                            <option value="x">x — curvas y = f(x), rebanadas verticales</option>
+                            <option value="y">y — curvas x = g(y), rebanadas horizontales</option>
+                        </select>
+                        <div class="campo__ayuda" id="ayudaVariable"></div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="funcionF" id="etiquetaFuncionF">f(x)</label>
+                        <input class="campo__control campo__control--funcion" id="funcionF"
+                               type="text" autocomplete="off" spellcheck="false">
+                    </div>
+
+                    <div class="campo oculto" id="grupoFuncionG">
+                        <label for="funcionG" id="etiquetaFuncionG">Segunda curva g(x)</label>
+                        <input class="campo__control campo__control--funcion" id="funcionG"
+                               type="text" autocomplete="off" spellcheck="false">
+                    </div>
+
+                    <div class="campo oculto" id="grupoTipoSolido">
+                        <label for="tipoSolido">Método</label>
+                        <select class="campo__control" id="tipoSolido"></select>
+                        <div class="campo__ayuda" id="descripcionSolido"></div>
+                    </div>
+
+                    <div class="fila oculto" id="grupoEje">
+                        <div class="campo">
+                            <label for="eje">Eje de revolución</label>
+                            <select class="campo__control" id="eje">
+                                <option value="x">Horizontal (y = k)</option>
+                                <option value="y">Vertical (x = k)</option>
+                            </select>
+                        </div>
+                        <div class="campo">
+                            <label for="desplazamientoEje">Valor de k</label>
+                            <input class="campo__control" id="desplazamientoEje"
+                                   type="number" step="any" value="0">
+                        </div>
+                    </div>
+
+                    <div class="casilla">
+                        <input id="limitesAutomaticos" type="checkbox">
+                        <label for="limitesAutomaticos">Buscar los límites</label>
+                    </div>
+                    <div class="campo__ayuda" style="margin-top: -0.5rem;">
+                        Márquelo si no conoce los límites. La aplicación los obtiene de los
+                        puntos de corte y le muestra cómo los encontró.
+                    </div>
+
+                    <div class="fila" id="grupoLimites">
+                        <div class="campo">
+                            <label for="limiteInferior">Límite inferior (a)</label>
+                            <input class="campo__control" id="limiteInferior"
+                                   type="number" step="any">
+                        </div>
+                        <div class="campo">
+                            <label for="limiteSuperior">Límite superior (b)</label>
+                            <input class="campo__control" id="limiteSuperior"
+                                   type="number" step="any">
+                        </div>
+                    </div>
+
+                    <button class="boton boton--principal boton--ancho"
+                            id="botonResolver" type="submit">Resolver</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- ---------------- PASO 3: SOLUCIÓN ---------------- -->
+        <section class="oculto" id="panelResultado" style="margin-top: 1.5rem;">
+
+            <div id="advertencia" class="oculto"></div>
+            <div id="resultado"></div>
+
+            <!-- En los volúmenes se dibujan las dos vistas: la región explica el
+                 planteamiento y el sólido enseña el resultado. En los temas de
+                 área solo aparece la primera. -->
+            <section class="tarjeta" style="margin-top: 1.5rem;" id="panelRegion">
+                <div class="grafica">
+                    <h2 style="margin: 0 0 0.75rem;" id="tituloRegion">Gráfica</h2>
+                    <p class="campo__ayuda" id="ayudaRegion" style="margin-top: 0;">
+                        La gráfica usa exactamente los mismos datos con los que se resolvió.
+                    </p>
+                    <p class="campo__ayuda" style="margin-top: 0;">
+                        Arrastre para mover la vista y use la rueda para acercar o alejar. Al pasar
+                        el puntero por una curva o un punto de corte se leen sus coordenadas.
+                    </p>
+                    <div class="grafica__lienzo-caja">
+                        <canvas class="grafica__lienzo" id="graficaRegion" role="img"
+                                aria-label="Región del ejercicio resuelto"></canvas>
+                        <div class="grafica__lectura" id="lectura"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tarjeta oculto" style="margin-top: 1.5rem;" id="panelSolido">
+                <div class="grafica">
+                    <h2 style="margin: 0 0 0.75rem;">El sólido</h2>
+                    <div class="grafica__lienzo-caja">
+                        <canvas class="grafica__lienzo grafica__lienzo--tresd" id="grafica"
+                                role="img"
+                                aria-label="Vista tridimensional del sólido de revolución"></canvas>
+                    </div>
+                    <p class="campo__ayuda">
+                        Arrastre para girar el sólido; con Shift o el botón derecho se desplaza.
+                        La rueda acerca y aleja, y los botones de la derecha vuelven a la vista
+                        inicial o abren la pantalla completa.
+                    </p>
+                </div>
+            </section>
+
+            <section class="tarjeta" style="margin-top: 1.5rem;">
+                <div id="explicacionLimites" class="oculto" style="margin-bottom: 1.5rem;"></div>
+                <h2 class="tarjeta__titulo">Procedimiento paso a paso</h2>
+                <div id="pasos"></div>
+            </section>
+
+            <details class="plegable" id="rebanadas" style="margin-top: 1.5rem;"></details>
+        </section>
+
+    </main>
+
+    <footer class="pie-pagina">
+        <p>Universidad Mariano Gálvez de Guatemala — Cálculo II</p>
+    </footer>
+
+</body>
+</html>

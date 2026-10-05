@@ -1,0 +1,188 @@
+/* ==================================================================
+   layout.css
+   Estructura de las paginas: barra superior, rejilla de trabajo,
+   pie de pagina.
+
+   La pantalla de cada tema se divide en dos: a la izquierda el
+   formulario, a la derecha la grafica y los resultados.
+   ================================================================== */
+
+/* --- Barra superior ---------------------------------------------- */
+
+.barra-superior {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-4);
+    padding: var(--espacio-3) var(--espacio-5);
+    background-color: var(--color-superficie);
+    border-bottom: 1px solid var(--color-borde);
+    box-shadow: var(--sombra-sm);
+}
+
+.barra-superior__marca {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-2);
+    font-weight: 700;
+    font-size: var(--texto-lg);
+    color: var(--color-texto);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.barra-superior__marca:hover {
+    text-decoration: none;
+}
+
+.barra-superior__simbolo {
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--color-area);
+}
+
+.barra-superior__navegacion {
+    display: flex;
+    gap: var(--espacio-1);
+    margin-left: auto;
+    flex-wrap: wrap;
+}
+
+.barra-superior__enlace {
+    padding: var(--espacio-2) var(--espacio-3);
+    border-radius: var(--radio-sm);
+    font-size: var(--texto-sm);
+    font-weight: 500;
+    color: var(--color-texto-suave);
+    transition: background-color var(--transicion), color var(--transicion);
+}
+
+.barra-superior__enlace:hover {
+    background-color: var(--color-superficie-alt);
+    color: var(--color-texto);
+    text-decoration: none;
+}
+
+.barra-superior__enlace[aria-current="page"] {
+    background-color: var(--color-area-suave);
+    color: var(--color-area);
+    font-weight: 600;
+}
+
+/* --- Contenedor general ------------------------------------------ */
+
+.contenedor {
+    width: 100%;
+    max-width: var(--ancho-maximo);
+    margin: 0 auto;
+    padding: var(--espacio-5);
+}
+
+/* --- Encabezado de cada tema -------------------------------------- */
+
+.encabezado-tema {
+    margin-bottom: var(--espacio-5);
+    padding-bottom: var(--espacio-4);
+    border-bottom: 2px solid var(--color-borde);
+}
+
+.encabezado-tema__titulo {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-3);
+    margin-bottom: var(--espacio-2);
+}
+
+.encabezado-tema__descripcion {
+    max-width: 70ch;
+    color: var(--color-texto-suave);
+    margin: 0;
+}
+
+/* La formula del tema, destacada bajo el titulo. */
+.encabezado-tema__formula {
+    display: inline-block;
+    margin-top: var(--espacio-3);
+    padding: var(--espacio-2) var(--espacio-4);
+    border-radius: var(--radio-md);
+    border-left: 4px solid var(--color-area);
+    background-color: var(--color-superficie);
+    font-family: var(--fuente-mono);
+    font-size: var(--texto-base);
+    color: var(--color-texto);
+}
+
+/* --- Rejilla de trabajo ------------------------------------------
+   Dos columnas: el formulario a la izquierda con ancho fijo y el
+   area de resultados a la derecha ocupando el resto. */
+
+.contenido {
+    display: grid;
+    grid-template-columns: var(--ancho-panel) minmax(0, 1fr);
+    gap: var(--espacio-5);
+    align-items: start;
+}
+
+.panel-formulario {
+    position: sticky;
+    top: calc(var(--espacio-6) + var(--espacio-4));
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-4);
+}
+
+.panel-resultados {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-5);
+    min-width: 0;
+}
+
+/* --- Menu de la pagina de inicio ---------------------------------- */
+
+.menu-temas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--espacio-5);
+    margin-top: var(--espacio-6);
+}
+
+/* --- Pie de pagina ------------------------------------------------ */
+
+.pie-pagina {
+    margin-top: var(--espacio-7);
+    padding: var(--espacio-5);
+    border-top: 1px solid var(--color-borde);
+    text-align: center;
+    font-size: var(--texto-sm);
+    color: var(--color-texto-tenue);
+}
+
+.pie-pagina p {
+    margin: var(--espacio-1) 0;
+}
+
+/* --- Utilidades de disposicion ------------------------------------ */
+
+.fila {
+    display: flex;
+    gap: var(--espacio-3);
+    align-items: flex-end;
+}
+
+.fila > * {
+    flex: 1;
+    min-width: 0;
+}
+
+.columna {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-3);
+}
+
+.oculto {
+    display: none !important;
+}

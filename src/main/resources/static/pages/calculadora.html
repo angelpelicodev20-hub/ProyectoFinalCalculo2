@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es" data-tema="claro">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Calculadora — Cálculo II</title>
+    <link rel="stylesheet" href="/css/estilos.css">
+    <script type="module" src="/js/main.js"></script>
+</head>
+
+<body data-pagina="calculadora">
+
+    <header class="barra-superior">
+        <a class="barra-superior__marca" href="/">
+            <span class="barra-superior__simbolo" aria-hidden="true">∫</span>
+            Cálculo II
+        </a>
+        <nav class="barra-superior__navegacion" aria-label="Secciones">
+            <a class="barra-superior__enlace" href="/pages/resolver.html">Resolver problema</a>
+            <a class="barra-superior__enlace" href="/pages/area-bajo-curva.html">Área bajo la curva</a>
+            <a class="barra-superior__enlace" href="/pages/area-entre-curvas.html">Área entre curvas</a>
+            <a class="barra-superior__enlace" href="/pages/solidos-revolucion.html">Sólidos de revolución</a>
+            <a class="barra-superior__enlace" href="/pages/calculadora.html">Calculadora</a>
+            <a class="barra-superior__enlace" href="/pages/ayuda.html">Ayuda</a>
+            <button class="boton-tema" id="botonTema" type="button" title="Cambiar tema">☾</button>
+        </nav>
+    </header>
+
+    <main class="contenedor">
+
+        <section class="encabezado-tema">
+            <h1>Calculadora</h1>
+            <p class="encabezado-tema__descripcion">
+                Para las cuentas sueltas que aparecen en medio de un ejercicio: evaluar una
+                función en un punto, comprobar cuánto vale <code>pi/3</code>, desarrollar un
+                producto de binomios. Aquí la respuesta es un número.
+            </p>
+            <p class="encabezado-tema__descripcion">
+                Si lo que quiere es resolver un ejercicio completo y ver el procedimiento,
+                use <a href="/pages/resolver.html">Resolver problema</a> o el tema que
+                corresponda.
+            </p>
+        </section>
+
+        <div class="contenido">
+
+            <section class="panel-formulario">
+                <form class="tarjeta" id="formularioCalculadora" novalidate>
+                    <h2 class="tarjeta__titulo">Expresión</h2>
+
+                    <div class="columna">
+                        <div class="campo">
+                            <label for="expresion">Escriba la expresión</label>
+                            <input class="campo__control campo__control--funcion" id="expresion"
+                                   type="text" value="2 + 3 * 4"
+                                   autocomplete="off" spellcheck="false">
+                            <div class="campo__ayuda">
+                                Por ejemplo: <code>2+3*4</code>, <code>pi/3</code>,
+                                <code>sqrt(16)</code>, <code>x^2 + 1</code>
+                            </div>
+                            <div id="teclado"></div>
+                        </div>
+
+                        <div class="campo">
+                            <label for="valorVariable">Valor de x (opcional)</label>
+                            <input class="campo__control" id="valorVariable"
+                                   type="number" step="any" placeholder="déjelo vacío si no usa x">
+                            <div class="campo__ayuda">
+                                Solo hace falta si la expresión contiene la variable.
+                            </div>
+                        </div>
+
+                        <button class="boton boton--principal boton--ancho" type="submit">
+                            Calcular
+                        </button>
+                    </div>
+                </form>
+
+                <section class="tarjeta">
+                    <h2 class="tarjeta__titulo">Ejemplos</h2>
+                    <div class="pastillas">
+                        <button class="pastilla" type="button" data-expresion="2 + 3 * 4">2+3·4</button>
+                        <button class="pastilla" type="button" data-expresion="pi/3">π/3</button>
+                        <button class="pastilla" type="button" data-expresion="sqrt(16)">√16</button>
+                        <button class="pastilla" type="button" data-expresion="sin(pi/6)">sin(π/6)</button>
+                        <button class="pastilla" type="button"
+                                data-expresion="x^2 + 1" data-valor="3">x²+1 en x=3</button>
+                        <button class="pastilla" type="button"
+                                data-expresion="(x+1)(x-1)" data-valor="2">(x+1)(x−1)</button>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel-resultados">
+                <div id="mensajes" class="oculto"></div>
+                <div id="resultado"></div>
+            </section>
+        </div>
+
+    </main>
+
+    <footer class="pie-pagina">
+        <p>Universidad Mariano Gálvez de Guatemala — Cálculo II</p>
+    </footer>
+
+</body>
+</html>

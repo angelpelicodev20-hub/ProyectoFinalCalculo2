@@ -1,0 +1,17 @@
+/* ==================================================================
+   estilos.css
+   Punto de entrada de los estilos.
+
+   Las paginas solo enlazan este archivo; el resto se carga desde aqui
+   en el orden correcto. Ese orden importa: las variables tienen que
+   existir antes de que alguien las use, y los ajustes para pantallas
+   pequenas van al final para poder sobrescribir lo anterior.
+   ================================================================== */
+
+@import url("variables.css");     /* Colores, tipografias y medidas   */
+@import url("base.css");          /* Reinicio y elementos basicos     */
+@import url("layout.css");        /* Estructura de las paginas        */
+@import url("componentes.css");   /* Tarjetas, botones, campos        */
+@import url("graficas.css");      /* Lienzo y controles de grafica    */
+@import url("pasos.css");         /* Resultados y paso a paso         */
+@import url("responsive.css");    /* Ajustes por tamano de pantalla   */
