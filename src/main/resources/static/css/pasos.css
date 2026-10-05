@@ -1,0 +1,211 @@
+/* ==================================================================
+   pasos.css
+   Estilos del panel de resultados y de la explicacion paso a paso.
+
+   Esta es la parte de la pantalla que convierte la aplicacion en
+   material de estudio: no solo el numero, sino el camino que lleva
+   hasta el.
+   ================================================================== */
+
+/* --- Resultado principal -------------------------------------------
+   El numero grande que responde la pregunta del ejercicio. */
+
+.resultado {
+    padding: var(--espacio-5);
+    border: 1px solid var(--color-borde);
+    border-left: 5px solid var(--color-area);
+    border-radius: var(--radio-lg);
+    background-color: var(--color-superficie);
+    box-shadow: var(--sombra-sm);
+}
+
+.resultado--curvas { border-left-color: var(--color-curvas); }
+.resultado--solidos { border-left-color: var(--color-solidos); }
+
+.resultado__etiqueta {
+    margin-bottom: var(--espacio-1);
+    font-size: var(--texto-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-texto-tenue);
+}
+
+.resultado__valor {
+    font-family: var(--fuente-mono);
+    font-size: var(--texto-3xl);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-area);
+    overflow-wrap: anywhere;
+}
+
+.resultado--curvas .resultado__valor { color: var(--color-curvas); }
+.resultado--solidos .resultado__valor { color: var(--color-solidos); }
+
+.resultado__unidad {
+    margin-left: var(--espacio-2);
+    font-size: var(--texto-base);
+    font-weight: 500;
+    color: var(--color-texto-tenue);
+}
+
+/* La forma exacta, por ejemplo "8*pi", junto al decimal. */
+.resultado__exacto {
+    margin-top: var(--espacio-2);
+    font-family: var(--fuente-mono);
+    font-size: var(--texto-lg);
+    color: var(--color-texto-suave);
+}
+
+/* --- Datos secundarios ---------------------------------------------
+   La integral con signo, el area de la region, el metodo usado. */
+
+.resultado__detalles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--espacio-4);
+    margin-top: var(--espacio-4);
+    padding-top: var(--espacio-4);
+    border-top: 1px solid var(--color-borde);
+}
+
+.dato {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-1);
+}
+
+.dato__etiqueta {
+    font-size: var(--texto-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--color-texto-tenue);
+}
+
+.dato__valor {
+    font-family: var(--fuente-mono);
+    font-size: var(--texto-base);
+    font-weight: 600;
+    color: var(--color-texto);
+}
+
+/* --- Lista de pasos --------------------------------------------------
+   Cada paso es un renglon numerado con su titulo, su explicacion y su
+   formula. La linea vertical a la izquierda los encadena visualmente. */
+
+.pasos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: paso;
+}
+
+.paso {
+    position: relative;
+    margin-bottom: var(--espacio-5);
+    padding-left: var(--espacio-7);
+}
+
+.paso:last-child {
+    margin-bottom: 0;
+}
+
+/* El circulo numerado. */
+.paso::before {
+    counter-increment: paso;
+    content: counter(paso);
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: var(--color-area-suave);
+    color: var(--color-area);
+    font-size: var(--texto-sm);
+    font-weight: 700;
+}
+
+/* La linea que une un paso con el siguiente. */
+.paso:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: calc(1rem - 1px);
+    top: 2.25rem;
+    bottom: calc(var(--espacio-5) * -1 + 0.25rem);
+    width: 2px;
+    background-color: var(--color-borde);
+}
+
+.paso__titulo {
+    margin: 0 0 var(--espacio-2);
+    padding-top: 0.2rem;
+    font-size: var(--texto-base);
+    font-weight: 650;
+    color: var(--color-texto);
+}
+
+.paso__explicacion {
+    margin: 0 0 var(--espacio-3);
+    font-size: var(--texto-sm);
+    color: var(--color-texto-suave);
+}
+
+/* La formula del paso. Se conserva el salto de linea que viene del
+   backend, porque ahi se separan las lineas del planteamiento. */
+.paso__expresion {
+    margin: 0;
+    padding: var(--espacio-3) var(--espacio-4);
+    border-radius: var(--radio-md);
+    background-color: var(--color-superficie-alt);
+    font-family: var(--fuente-mono);
+    font-size: var(--texto-sm);
+    color: var(--color-texto);
+    white-space: pre-wrap;
+    overflow-x: auto;
+}
+
+.paso__resultado {
+    display: inline-block;
+    margin-top: var(--espacio-2);
+    padding: var(--espacio-1) var(--espacio-3);
+    border-radius: var(--radio-sm);
+    background-color: var(--color-exito-fondo);
+    font-family: var(--fuente-mono);
+    font-size: var(--texto-sm);
+    font-weight: 600;
+    color: var(--color-exito);
+}
+
+/* --- Variantes de color por tema --------------------------------------- */
+
+.pasos--curvas .paso::before {
+    background-color: var(--color-curvas-suave);
+    color: var(--color-curvas);
+}
+
+.pasos--solidos .paso::before {
+    background-color: var(--color-solidos-suave);
+    color: var(--color-solidos);
+}
+
+/* --- Tabla de tramos y de comparacion ----------------------------------- */
+
+.tabla-desplazable {
+    overflow-x: auto;
+}
+
+.tabla-resaltada tbody tr:hover {
+    background-color: var(--color-superficie-alt);
+}
+
+/* Marca la fila del metodo que el usuario eligio dentro de la tabla
+   comparativa, para ubicarla entre las demas. */
+.fila-destacada {
+    background-color: var(--color-area-suave) !important;
+    font-weight: 600;
+}

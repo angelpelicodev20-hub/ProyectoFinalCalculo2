@@ -1,0 +1,868 @@
+<!doctype html>
+<html lang="es" data-tema="claro">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ayuda — Cálculo II</title>
+    <link rel="stylesheet" href="/css/estilos.css">
+    <script type="module" src="/js/main.js"></script>
+</head>
+
+<body data-pagina="ayuda">
+
+    <header class="barra-superior">
+        <a class="barra-superior__marca" href="/">
+            <span class="barra-superior__simbolo" aria-hidden="true">∫</span>
+            Cálculo II
+        </a>
+        <nav class="barra-superior__navegacion" aria-label="Secciones">
+            <a class="barra-superior__enlace" href="/pages/resolver.html">Resolver problema</a>
+            <a class="barra-superior__enlace" href="/pages/area-bajo-curva.html">Área bajo la curva</a>
+            <a class="barra-superior__enlace" href="/pages/area-entre-curvas.html">Área entre curvas</a>
+            <a class="barra-superior__enlace" href="/pages/solidos-revolucion.html">Sólidos de revolución</a>
+            <a class="barra-superior__enlace" href="/pages/calculadora.html">Calculadora</a>
+            <a class="barra-superior__enlace" href="/pages/ayuda.html">Ayuda</a>
+            <button class="boton-tema" id="botonTema" type="button" title="Cambiar tema">☾</button>
+        </nav>
+    </header>
+
+    <main class="contenedor">
+
+        <section class="encabezado-tema">
+            <h1>Ayuda</h1>
+            <p class="encabezado-tema__descripcion">
+                Cómo se usa la aplicación, cómo se escriben las funciones, qué hace cada método
+                y qué significan los resultados. Las tablas de métodos y funciones se llenan con
+                lo que informa el servidor, así que siempre muestran exactamente lo que el
+                programa acepta: si algo no aparece aquí, no está implementado.
+            </p>
+        </section>
+
+        <div id="mensajes" class="oculto"></div>
+
+        <div class="columna" style="gap: 2rem;">
+
+            <!-- ================= LOS TRES MODOS ================= -->
+            <section class="tarjeta">
+                <h2 class="tarjeta__titulo">Los tres modos de uso</h2>
+
+                <h3>Modo 1 — Calculadora</h3>
+                <p>
+                    En <a href="/pages/calculadora.html">Calculadora</a> se escribe una
+                    expresión y se obtiene su valor. Sirve para las operaciones sueltas que
+                    aparecen en medio de un ejercicio: cuánto vale <code>pi/3</code>, cuánto da
+                    <code>f(2)</code>, cómo queda desarrollado <code>(x+1)(x-1)</code>.
+                </p>
+                <p>
+                    Es lo único que hace: aquí la respuesta es un número y se acaba. Para
+                    resolver un ejercicio completo y ver el procedimiento, use los modos 2 o 3.
+                </p>
+
+                <h3>Modo 2 — Resolver un problema escrito</h3>
+                <p>
+                    En <a href="/pages/resolver.html">Resolver problema</a> se copia el
+                    enunciado tal como está en la hoja. El recorrido es:
+                </p>
+                <pre class="paso__expresion">Escribe el problema
+        ↓
+Identifica el tema
+        ↓
+Identifica el método
+        ↓
+Extrae funciones, límites y eje
+        ↓
+Llena Datos del ejercicio
+        ↓
+Usted los revisa y corrige
+        ↓
+Resuelve
+        ↓
+Procedimiento + gráfica + resultado</pre>
+                <p>
+                    El paso de revisión no es un trámite. La interpretación automática puede
+                    equivocarse, y por eso la aplicación nunca resuelve directamente: primero
+                    le muestra qué entendió y en qué se basó, y espera.
+                </p>
+
+                <h3 style="margin-top: 1.5rem;">Lo que no está escrito, se deduce</h3>
+                <p>
+                    Que el enunciado no escriba un dato no significa que no lo diga. Casi
+                    siempre lo dice de otra forma: nombrando las rectas que cierran la región,
+                    o dejando que sean las propias curvas las que la cierren al cortarse. Antes
+                    de pedirle nada, la aplicación agota los caminos, en este orden:
+                </p>
+                <pre class="paso__expresion">1. El intervalo escrito en el enunciado: [0, 2], "de 0 a 4"
+2. Dos rectas verticales que limitan la región
+3. Los puntos donde se cortan las dos curvas
+4. Una recta vertical más el eje de giro, que cierra la región por el otro lado
+5. Una recta vertical más el corte de la curva con el suelo de la región
+6. Los dos cortes de la curva con el suelo</pre>
+                <p>
+                    Solo si los seis fallan se le pide el intervalo. Y cuando se dedujo, se le
+                    enseña la cuenta completa: un intervalo presentado sin el razonamiento que
+                    lo produjo no se distingue de uno inventado.
+                </p>
+
+                <h3 style="margin-top: 1.5rem;">Una frontera no es el eje de giro</h3>
+                <p>
+                    Es la distinción que más cuesta y la que más cambia el resultado. La misma
+                    ecuación <code>x = 2</code> puede desempeñar dos papeles opuestos, y lo que
+                    los separa es cómo la introduce la frase:
+                </p>
+                <div class="tabla-desplazable">
+                    <table class="tabla-resaltada">
+                        <thead>
+                            <tr><th>En el enunciado</th><th>Papel</th><th>Qué significa</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>"…limitada por la curva y <strong>la ordenada 2</strong>"</td>
+                                <td>Frontera</td>
+                                <td>La recta <code>x = 2</code> cierra la región por un costado</td>
+                            </tr>
+                            <tr>
+                                <td>"…gira <strong>alrededor de</strong> x = 2"</td>
+                                <td>Eje</td>
+                                <td>La región rota tomando esa recta como eje</td>
+                            </tr>
+                            <tr>
+                                <td>"…acotada por f y <strong>el eje X</strong>"</td>
+                                <td>Frontera</td>
+                                <td>El eje X hace de suelo de la región</td>
+                            </tr>
+                            <tr>
+                                <td>"…<strong>alrededor del</strong> eje X"</td>
+                                <td>Eje</td>
+                                <td>El eje X es alrededor de lo que gira</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="margin-top: 1rem;">
+                    Las fronteras aparecen en su propio renglón de la interpretación, con la
+                    palabra <em>frontera</em>, separadas del eje de revolución.
+                </p>
+
+                <h3 style="margin-top: 1.5rem;">De dónde salió cada dato</h3>
+                <p>
+                    Junto a cada dato se indica cómo se obtuvo, porque no todos merecen la
+                    misma confianza:
+                </p>
+                <div class="tabla-desplazable">
+                    <table class="tabla-resaltada">
+                        <tbody>
+                            <tr>
+                                <td><strong>Dato explícito</strong></td>
+                                <td>El enunciado lo dice con todas las letras.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Deducido matemáticamente</strong></td>
+                                <td>
+                                    Salió de resolver una ecuación: una intersección, un corte
+                                    con el eje. Es tan firme como el anterior y la cuenta se
+                                    muestra.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Interpretado del lenguaje</strong></td>
+                                <td>
+                                    Salió de entender una expresión como "la ordenada 2". Es el
+                                    único que puede fallar sin que haya un error de cálculo
+                                    detrás, así que conviene revisarlo.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>No se pudo determinar</strong></td>
+                                <td>Ni está escrito ni se puede deducir. Es lo que se le pide.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 style="margin-top: 1.5rem;">Si usted pide un método, se usa ese</h3>
+                <p>
+                    Cuando el enunciado dice "aplicando el método de capas cilíndricas", eso es
+                    parte del ejercicio: lo que se está practicando es ese método. La
+                    aplicación lo respeta aunque la geometría sugiriera otro, y en ese caso lo
+                    dice, porque los dos métodos deben dar el mismo volumen y si no coinciden
+                    hay un error en alguna parte. Nunca cambia de método en silencio.
+                </p>
+                <p>
+                    Reconoce estas expresiones y las traduce a su significado: <code>ordenada</code>,
+                    <code>abscisa</code>, <code>eje X</code>, <code>eje Y</code>,
+                    <code>alrededor de</code>, <code>en torno a</code>, <code>girar sobre</code>,
+                    <code>región limitada</code>, <code>acotada</code>, <code>comprendida entre</code>,
+                    <code>la vertical x = k</code>, <code>discos</code>, <code>anillos</code>,
+                    <code>arandelas</code> y <code>capas cilíndricas</code>.
+                </p>
+
+                <h3>Modo 3 — Validar un ejercicio hecho a mano</h3>
+                <p>
+                    Si ya resolvió el ejercicio en el cuaderno y quiere comprobarlo, entre al
+                    tema que corresponda e introduzca lo que usted planteó: las funciones, los
+                    límites y, si aplica, el eje de revolución. También puede marcar
+                    <strong>Buscar los límites</strong> para que los deduzca la aplicación.
+                </p>
+                <p>
+                    La aplicación resuelve de nuevo y muestra el procedimiento paso a paso, el
+                    resultado y la gráfica. Comparándolo con lo suyo se ve en qué paso concreto
+                    se separaron los dos caminos, que es más útil que saber solo si el número
+                    final coincide.
+                </p>
+            </section>
+
+            <!-- ================= EJEMPLO COMPLETO ================= -->
+            <section class="tarjeta">
+                <h2 class="tarjeta__titulo">Un ejemplo completo</h2>
+
+                <p>Si en el modo 2 se escribe este enunciado:</p>
+
+                <pre class="paso__expresion">Encuentre el volumen del sólido que se genera al rotar
+f(x) = -x² + 4 y g(x) = 2x + 1
+sobre el eje X en [0,1]</pre>
+
+                <p>la aplicación detecta:</p>
+
+                <div class="tabla-desplazable">
+                    <table class="tabla-resaltada">
+                        <tbody>
+                            <tr><td>Tema</td><td>Volumen de sólidos de revolución</td></tr>
+                            <tr><td>Método</td><td>Método de arandelas</td></tr>
+                            <tr><td class="mono">f(x)</td><td class="mono">-x² + 4</td></tr>
+                            <tr><td class="mono">g(x)</td><td class="mono">2x + 1</td></tr>
+                            <tr><td>Eje de revolución</td><td class="mono">y = 0 (el eje X)</td></tr>
+                            <tr><td>Intervalo</td><td class="mono">[0, 1]</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p style="margin-top: 1rem;">
+                    Esos datos se cargan automáticamente en <strong>Datos del ejercicio</strong>,
+                    donde se pueden corregir. Al resolver, el volumen sale
+                    <code>(46/5)π ≈ 28.902652</code>.
+                </p>
+
+                <div class="aviso aviso--informacion">
+                    <span class="aviso__icono" aria-hidden="true">i</span>
+                    <div class="aviso__texto">
+                        <strong>El método no se adivina por la palabra "volumen"</strong>
+                        La aplicación mide la región a lo largo del intervalo. Aquí las dos
+                        curvas se mantienen separadas del eje —la más cercana nunca baja de 1—,
+                        así que al girar queda un hueco y corresponden arandelas. Si la región
+                        tocara el eje, saldrían discos.
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= ENUNCIADOS REALES ================= -->
+            <section class="tarjeta">
+                <h2 class="tarjeta__titulo">Enunciados reales, tal como vienen en la tarea</h2>
+
+                <p>
+                    Ninguno de estos cuatro escribe el ejercicio en forma de campos, y los
+                    cuatro se resuelven igual. Cada uno enseña una manera distinta de decir lo
+                    mismo.
+                </p>
+
+                <h3>Una frontera nombrada en palabras</h3>
+                <pre class="paso__expresion">Hallar el volumen generado por la rotación limitada por
+y = 4x - x² y la ordenada 2.</pre>
+                <p>
+                    "La ordenada 2" se lee como la recta <code>x = 2</code>, que cierra la
+                    región por la derecha. El otro borde lo pone la propia parábola: igualando
+                    <code>4x - x² = 0</code> salen <code>x = 0</code> y <code>x = 4</code>, y
+                    junto a la recta la región que queda cerrada va de <code>0</code> a
+                    <code>2</code>. El intervalo <strong>no se le pide</strong>.
+                </p>
+                <p>
+                    Lo que sí se le pide es el <strong>eje de revolución</strong>, porque el
+                    enunciado no lo dice y no se puede deducir: la misma región girada sobre el
+                    eje X o sobre el eje Y da sólidos distintos. La recta <code>x = 2</code> no
+                    sirve como eje — es una frontera, que es otra cosa.
+                </p>
+
+                <h3 style="margin-top: 1.5rem;">Límites que hay que calcular</h3>
+                <pre class="paso__expresion">Hallar el volumen generado en la rotación del área formada
+alrededor del eje X aplicando método de anillos:
+y = x³, y = x²</pre>
+                <p>
+                    Aquí no falta nada. El intervalo sale de igualar las dos curvas:
+                    <code>x³ = x²</code>, es decir <code>x²(x - 1) = 0</code>, de donde
+                    <code>x = 0</code> y <code>x = 1</code>. El método pedido son anillos, que
+                    es otro nombre de las arandelas, y se aplica ese.
+                </p>
+                <p>
+                    En <code>[0, 1]</code> la curva que va por encima es <code>x²</code>, no la
+                    que se escribió primero. La aplicación lo comprueba evaluando las dos en un
+                    punto del intervalo y pone <code>R(x) = x²</code> como radio exterior y
+                    <code>r(x) = x³</code> como interior. El volumen sale <code>2π/35</code>.
+                </p>
+
+                <h3 style="margin-top: 1.5rem;">La región la cierra el propio eje</h3>
+                <pre class="paso__expresion">Hallar el volumen del sólido de revolución que se genera
+al hacer girar sobre el eje Y la región comprendida entre
+y = -x³ + 4x² - 3x + 1 y la vertical x = 3.</pre>
+                <p>
+                    El eje Y es la recta <code>x = 0</code>. Con la vertical <code>x = 3</code>
+                    como otra frontera, el sólido se extiende del eje a esa recta y el
+                    intervalo es <code>[0, 3]</code>. Como las funciones están en
+                    <code>x</code> y el eje es vertical, corresponden capas cilíndricas:
+                    rebanar perpendicular al eje obligaría a despejar <code>x</code> en función
+                    de <code>y</code>.
+                </p>
+
+                <h3 style="margin-top: 1.5rem;">Un método que el enunciado exige</h3>
+                <pre class="paso__expresion">Hallar el volumen generado en la rotación del área formada
+alrededor del eje X aplicando el método de capas cilíndricas.
+Defina R como la región acotada por la gráfica de
+f(x) = 3x - x² y el eje X sobre el intervalo [0,2].</pre>
+                <p>
+                    El eje X aparece dos veces con papeles opuestos: la primera detrás de
+                    "alrededor del", y ahí es el eje de giro; la segunda en la lista de lo que
+                    acota la región, y ahí es el suelo. La aplicación los distingue por el
+                    contexto.
+                </p>
+                <p>
+                    Por la geometría corresponderían discos, porque la región toca el eje. Pero
+                    el enunciado pide capas y se aplican capas: se le avisa de la diferencia,
+                    no se le cambia el ejercicio.
+                </p>
+            </section>
+
+            <!-- ================= ESCRITURA LIBRE ================= -->
+            <section class="tarjeta">
+                <h2 class="tarjeta__titulo">El enunciado se puede copiar tal como viene</h2>
+
+                <p>
+                    No hace falta reescribir el ejercicio para la aplicación. Estas formas de
+                    escribir, que son las que aparecen en las listas de ejercicios, se entienden
+                    tal cual:
+                </p>
+
+                <div class="tabla-desplazable">
+                    <table>
+                        <thead>
+                            <tr><th>Se escribe</th><th>Se entiende</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="mono">y = x3 – x</td>
+                                <td>y = x³ − x: el guion largo es una resta y el 3 pegado a la x es un exponente.</td></tr>
+                            <tr><td class="mono">y = x ^2,  9y ²</td>
+                                <td>Los espacios alrededor del exponente no importan.</td></tr>
+                            <tr><td class="mono">y^2 = 8x</td>
+                                <td>Una curva sin despejar. Se despeja la variable que haga falta:
+                                    y = ±√(8x), o x = y²/8.</td></tr>
+                            <tr><td class="mono">4x² + 9y² = 36</td>
+                                <td>La elipse: y = ±(2/3)√(9 − x²). En el primer cuadrante se usa la rama de arriba.</td></tr>
+                            <tr><td class="mono">(x – 1)^2 = 20 – 4y</td>
+                                <td>Se saca la raíz: x = 1 ± √(20 − 4y).</td></tr>
+                            <tr><td class="mono">x = y^2,  x = y + 6</td>
+                                <td>Curvas de la forma x = g(y): la región se recorre con rebanadas horizontales, respecto de y.</td></tr>
+                            <tr><td class="mono">x menor e igual q 1 y x mayor e igual q 0</td>
+                                <td>El intervalo [0, 1]. También 0 ≤ x ≤ 1, «de 0 a 1», «entre x = 0 y x = 1».</td></tr>
+                            <tr><td class="mono">al rotar y = 0, haciendo rotar el eje y, en torno de la recta x = 2</td>
+                                <td>El eje de giro.</td></tr>
+                            <tr><td class="mono">con respecto a esa recta</td>
+                                <td>El eje es la recta nombrada antes (por ejemplo, la ordenada x = 2), que además sigue cerrando la región.</td></tr>
+                            <tr><td class="mono">los ejes coordenados, el primer cuadrante</td>
+                                <td>La región la cierran el eje X y el eje Y, y solo se usa la parte con x ≥ 0, y ≥ 0.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 style="margin-top: 1.5rem;">Respecto de x o respecto de y</h3>
+                <p>
+                    La aplicación prueba las dos formas de rebanar la región. Con rebanadas
+                    verticales (respecto de x) cada rebanada tiene que ir siempre de la misma
+                    curva de abajo a la misma de arriba; si a mitad de camino cambia el borde,
+                    habría que partir la integral. Entonces prueba con rebanadas horizontales
+                    (respecto de y), despejando las curvas como x = g(y). Es lo que pasa con
+                    <code>x = y²</code> y <code>x = y + 6</code>, o con la parábola cerrada por
+                    las rectas <code>y = 1</code> y <code>y = 3</code>.
+                </p>
+                <p>
+                    Si el enunciado pide un método, ese decide la variable: discos o arandelas
+                    alrededor de un eje vertical se integran respecto de y; capas alrededor de un
+                    eje vertical, respecto de x. Todo el planteamiento —el despeje, la rama que
+                    se usó, por qué se integra en esa variable— aparece en el paso
+                    «Plantear la región» del procedimiento.
+                </p>
+
+                <h3 style="margin-top: 1.5rem;">Puntos de intersección y factorización</h3>
+                <p>
+                    Cuando los límites salen de los cortes de las curvas, la ecuación se resuelve
+                    como en clase: se igualan las curvas, se pasa todo a un lado, se saca el
+                    factor común, se factoriza el trinomio (dos números, diferencia de
+                    cuadrados o fórmula general) o se prueban los divisores del término
+                    independiente, y se iguala cada factor a cero. Si hay una raíz, como en
+                    <code>x² = √(8x)</code>, se eleva al cuadrado y se comprueban las
+                    soluciones, porque al elevar pueden aparecer soluciones falsas.
+                </p>
+                <p>
+                    Solo cuando la ecuación no es polinómica ni se puede reducir a una (por
+                    ejemplo <code>sin(x) = cos(x)</code>) las soluciones se calculan
+                    numéricamente, y el procedimiento lo dice.
+                </p>
+
+                <h3 style="margin-top: 1.5rem;">Cuando de verdad falta un dato</h3>
+                <p>
+                    <code>Encuentre el volumen de la región limitada por f(x) = x2 + 1,
+                    alrededor de la recta x = 3</code> no se puede resolver: la recta
+                    <code>x = 3</code> es el eje de giro, no una frontera, y con una sola curva
+                    que no corta el eje X la región no queda cerrada. La aplicación lo dice con
+                    esas palabras y deja escritos la función y el eje, para que usted solo
+                    complete los límites o la frontera que falta. No inventa ninguno.
+                </p>
+            </section>
+
+            <!-- ================= LAS GRÁFICAS ================= -->
+            <section class="tarjeta">
+                <h2 class="tarjeta__titulo">Qué enseña cada gráfica</h2>
+
+                <p>
+                    En los volúmenes se dibujan dos vistas, y no son intercambiables.
+                </p>
+
+                <h3>La gráfica plana</h3>
+                <p>
+                    Es la vista del plano, y es donde está el planteamiento. Muestra las curvas,
+                    la región sombreada, los puntos donde se cortan con sus coordenadas, los
+                    límites de integración como líneas de puntos y, en los volúmenes, el eje de
+                    revolución como una línea a trazos. Esa última es la que hace falta para
+                    entender la fórmula: el radio de cada rebanada es la distancia de la curva
+                    hasta ese eje.
+                </p>
+                <p>
+                    Es interactiva, como en GeoGebra, en las cuatro páginas: se arrastra para
+                    mover la vista, la rueda acerca y aleja hacia el puntero (en el teléfono, se
+                    pellizca), un doble clic acerca, y los botones redondos de la derecha vuelven
+                    a la vista inicial, acercan, alejan o abren la pantalla completa. Al pasar el
+                    puntero por una curva se lee el punto exacto sobre ella, y al pasarlo por un
+                    punto de corte, su coordenada. Las curvas se calculan otra vez en la zona que
+                    se esté mirando, así que al alejar la vista siguen apareciendo.
+                </p>
+                <p>
+                    Las curvas del enunciado se dibujan completas, en gris, aunque la región use
+                    solo un trozo: de <code>y² = 8x</code> se ve también la rama de abajo, y de la
+                    elipse, la elipse entera. Las curvas <code>x = g(y)</code> se dibujan en su
+                    sitio: <code>x = y²</code> abre hacia la derecha. Cuando las curvas se
+                    cruzan, cada tramo de la región se sombrea con un tono distinto.
+                </p>
+
+                <h3>El sólido</h3>
+                <p>
+                    Es el cuerpo que resulta de girar esa región, dibujado como en la vista 3D
+                    de GeoGebra: el eje X en rojo, el Y en verde y el Z en azul, cada uno con
+                    sus marcas, y el plano XY como un suelo gris. Ese suelo es el plano de la
+                    gráfica de arriba, donde está la región antes de girar; por eso la mitad
+                    del sólido que queda debajo se ve teñida de gris.
+                </p>
+                <p>
+                    El sólido es semitransparente para que se vea también su cara de atrás y
+                    el eje que lo atraviesa. La malla dibujada encima son los paralelos —los
+                    círculos que describe cada punto del perfil al girar— y los meridianos,
+                    que son copias del perfil. En los extremos aparece el corte del sólido:
+                    un círculo lleno si es macizo, un anillo si tiene hueco.
+                </p>
+                <p>
+                    Se arrastra para girarlo, con Shift o el botón derecho para desplazarlo, y
+                    con la rueda se acerca y aleja. Los botones redondos de la derecha vuelven
+                    a la vista inicial, acercan, alejan y abren la pantalla completa. Si la
+                    región gira alrededor de una recta que no es un eje coordenado, como
+                    <code>y = -1</code>, esa recta aparece a trazos sobre el suelo.
+                </p>
+
+                <p>
+                    Las dos salen de los mismos datos con los que se calculó el volumen: las
+                    mismas funciones, los mismos límites y el mismo eje. No existe una segunda
+                    lectura del problema para dibujar, así que la gráfica no puede describir un
+                    ejercicio distinto del que se resolvió.
+                </p>
+            </section>
+
+            <!-- ================= LOS TRES TEMAS ================= -->
+            <section class="tarjeta">
+                <h2 class="tarjeta__titulo">Los tres temas</h2>
+
+                <h3>Área bajo la curva</h3>
+                <p>
+                    El área encerrada entre una función y el eje X, entre dos rectas verticales.
+                    Es el único tema que ofrece elegir cómo resolver, porque los rectángulos de
+                    Riemann tienen aquí un valor propio: son la definición de la que nace la
+                    integral.
+                </p>
+                <code class="tarjeta-tema__formula">A = ∫ desde a hasta b de f(x) dx</code>
+
+                <h3>Área entre dos curvas</h3>
+                <p>
+                    El área de la región encerrada entre dos funciones. La altura de la región
+                    en cada punto es la diferencia entre la curva de arriba y la de abajo.
+                </p>
+                <code class="tarjeta-tema__formula">A = ∫ desde a hasta b de [f(x) − g(x)] dx</code>
+
+                <h3>Volumen de sólidos de revolución</h3>
+                <p>
+                    El volumen del sólido que se forma al girar una región alrededor de una
+                    recta. Aquí sí hay tres métodos, y no son intercambiables: cuál corresponde
+                    lo decide la geometría del ejercicio.
+                </p>
+                <code class="tarjeta-tema__formula">V = π ∫ desde a hasta b de [R(x)]² dx</code>
+            </section>
+
+            <!-- ================= MÉTODOS DE ÁREA ================= -->
+            <section class="tarjeta">
+                <h2 class="tarjeta__titulo">Cómo se resuelve un área</h2>
+                <div class="tabla-desplazable">
+                    <table class="tabla-resaltada">
+                        <thead>
+                            <tr>
+                                <th>Opción</th>
+                                <th>Fórmula</th>
+                                <th>En qué consiste</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaMetodos"></tbody>
+                    </table>
+                </div>
+
+                <h3 style="margin-top: 1.5rem;">Rectángulos de Riemann</h3>
+                <p>
+                    Se conservan en el tema de área bajo la curva porque explican de dónde sale
+                    la integral. El intervalo se divide en <em>n</em> rectángulos de base
+                    <code>h = (b − a) / n</code>, y la altura de cada uno se mide en un punto de
+                    su subintervalo. Dónde se mida cambia el resultado:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Por la izquierda:</strong> con una función creciente la suma se
+                        queda corta, porque cada rectángulo se queda por debajo de la curva.
+                    </li>
+                    <li>
+                        <strong>Por la derecha:</strong> con una función creciente la suma se
+                        pasa, por la razón contraria.
+                    </li>
+                    <li>
+                        <strong>Por el punto medio:</strong> lo que sobra de un lado compensa lo
+                        que falta del otro, y la aproximación es bastante mejor.
+                    </li>
+                </ul>
+                <p>
+                    Esas tres no son tres métodos distintos: son el mismo método midiendo en un
+                    sitio u otro, y por eso se eligen en un selector aparte. El resultado que se
+                    muestra sigue siendo el exacto, obtenido por integración; la suma de
+                    Riemann aparece al lado para poder comparar cuánto se acerca.
+                </p>
+
+                <div class="aviso aviso--informacion">
+                    <span class="aviso__icono" aria-hidden="true">i</span>
+                    <div class="aviso__texto">
+                        <strong>Qué pasó con Simpson, el trapecio y los demás</strong>
+                        Se retiraron. Todos respondían lo mismo —un número aproximado— y ninguno
+                        dejaba un procedimiento que se pudiera copiar al cuaderno. Ahora la
+                        aplicación busca la primitiva y aplica la regla de Barrow, que es como
+                        se resuelve en clase.
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= MÉTODOS DE SÓLIDOS ================= -->
+            <section class="tarjeta">
+                <h2 class="tarjeta__titulo">Métodos para sólidos de revolución</h2>
+                <div class="tabla-desplazable">
+                    <table class="tabla-resaltada">
+                        <thead>
+                            <tr>
+                                <th>Método</th>
+                                <th>Fórmula</th>
+                                <th>Cuándo se usa</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaSolidos"></tbody>
+                    </table>
+                </div>
+
+                <h3 style="margin-top: 1.5rem;">Cómo decide la aplicación</h3>
+                <p>
+                    Son dos preguntas encadenadas, y las dos se responden mirando la geometría,
+                    no el enunciado:
+                </p>
+                <ol>
+                    <li>
+                        <strong>¿En qué dirección conviene rebanar?</strong> Discos y arandelas
+                        cortan perpendicularmente al eje. Si el eje es vertical y las funciones
+                        están escritas en términos de <em>x</em>, esos cortes obligarían a
+                        despejar <em>x</em> en función de <em>y</em>. Las capas cilíndricas
+                        rebanan al revés y evitan ese despeje.
+                    </li>
+                    <li>
+                        <strong>¿El sólido queda macizo o hueco?</strong> Se recorre el intervalo
+                        midiendo la distancia de la región al eje. Si la frontera más cercana lo
+                        toca, cada rebanada es un disco lleno. Si la región se mantiene separada,
+                        queda un agujero y las rebanadas son arandelas.
+                    </li>
+                </ol>
+                <p>
+                    Si usted elige un método distinto del que sugiere la geometría, la aplicación
+                    lo respeta y resuelve con el suyo, pero lo hace constar en el procedimiento.
+                </p>
+            </section>
+
+            <!-- ================= BUSCAR LOS LÍMITES ================= -->
+            <section class="tarjeta">
+                <h2 class="tarjeta__titulo">La casilla "Buscar los límites"</h2>
+                <p>
+                    Está en los tres temas y sirve para cuando el enunciado no da el intervalo,
+                    que es el caso del ejercicio clásico que pide "el área encerrada entre las
+                    dos curvas".
+                </p>
+                <p>Al marcarla, los campos de <em>a</em> y <em>b</em> se desactivan y:</p>
+                <ul>
+                    <li>
+                        <strong>Con dos curvas</strong> se resuelve <code>f(x) = g(x)</code> y se
+                        toman el primer y el último punto de corte.
+                    </li>
+                    <li>
+                        <strong>Con una sola curva</strong> se buscan los puntos donde corta el
+                        eje X, que es donde la región encerrada empieza y termina.
+                    </li>
+                </ul>
+                <p>
+                    Los límites hallados no se usan en silencio. Aparecen en el bloque
+                    <strong>De dónde salieron los límites</strong>, con la ecuación que se
+                    resolvió y sus soluciones, y se escriben de vuelta en los campos del
+                    formulario para que se vea con qué números se integró de verdad:
+                </p>
+
+                <pre class="paso__expresion">Se igualan las dos funciones para hallar donde se cortan:
+
+f(x) = g(x)
+x = x^2
+
+Equivale a resolver f(x) - g(x) = 0:
+(x) - (x^2) = 0
+
+Soluciones:
+  x = 0
+  x = 1
+
+La región encerrada va del primer corte al último, así que esos dos
+valores son los límites de integración: de 0 a 1.</pre>
+
+                <p>
+                    Si las curvas no se cortan en al menos dos puntos, la aplicación lo dice y
+                    le pide los límites en lugar de elegir un intervalo cualquiera.
+                </p>
+            </section>
+
+            <!-- ================= ESCRIBIR FUNCIONES ================= -->
+            <section class="tarjeta">
+                <h2 class="tarjeta__titulo">Cómo escribir una función</h2>
+
+                <p>
+                    La función se escribe en una sola línea, como en una calculadora. Estas son
+                    las reglas que conviene tener presentes:
+                </p>
+
+                <ul>
+                    <li>
+                        La potencia usa el acento circunflejo: <code>x^2</code>,
+                        <code>x^3</code>. También se acepta <code>x**2</code> y el superíndice
+                        <code>x²</code>, que es como suele venir copiado de un documento.
+                    </li>
+                    <li>
+                        La multiplicación se puede omitir cuando es evidente: <code>2x</code> es
+                        <code>2*x</code>, y <code>(x+1)(x-1)</code> es el producto de los dos
+                        factores.
+                    </li>
+                    <li>
+                        Los ángulos de las funciones trigonométricas van en
+                        <strong>radianes</strong>. Para 90 grados escriba <code>pi/2</code>.
+                    </li>
+                    <li>
+                        <code>ln(x)</code> es el logaritmo natural y <code>log(x)</code> el de
+                        base 10.
+                    </li>
+                    <li>
+                        Toda función necesita paréntesis: <code>sin(x)</code>, no
+                        <code>sin x</code>. La excepción es el símbolo de raíz:
+                        <code>√x</code> se entiende igual que <code>sqrt(x)</code>.
+                    </li>
+                    <li>
+                        Se puede pegar el enunciado con su encabezado: si escribe
+                        <code>f(x) = x^2</code>, el programa entiende que la función es
+                        <code>x^2</code>.
+                    </li>
+                </ul>
+
+                <div class="aviso aviso--informacion">
+                    <span class="aviso__icono" aria-hidden="true">i</span>
+                    <div class="aviso__texto">
+                        <strong>Cuidado con el signo y la potencia</strong>
+                        <code>-x^2</code> se interpreta como <code>-(x^2)</code>, igual que en
+                        clase. Si quiere elevar el negativo, escriba <code>(-x)^2</code>.
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= FUNCIONES ================= -->
+            <section class="tarjeta">
+                <h2 class="tarjeta__titulo">Funciones que se pueden usar</h2>
+                <div class="tabla-desplazable">
+                    <table class="tabla-resaltada">
+                        <thead>
+                            <tr>
+                                <th>Se escribe</th>
+                                <th>Qué calcula</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaFunciones"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ================= CONSTANTES ================= -->
+            <section class="tarjeta">
+                <h2 class="tarjeta__titulo">Constantes</h2>
+                <div class="tabla-desplazable">
+                    <table class="tabla-resaltada">
+                        <thead>
+                            <tr>
+                                <th>Se escribe</th>
+                                <th class="numero">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaConstantes"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ================= LEER LOS RESULTADOS ================= -->
+            <section class="tarjeta">
+                <h2 class="tarjeta__titulo">Cómo leer los resultados</h2>
+
+                <h3>El procedimiento</h3>
+                <p>
+                    Cada paso dice qué se hace, por qué se hace en ese momento, qué fórmula lo
+                    respalda y de dónde sale cada valor. Por ejemplo, en un sólido no se limita
+                    a escribir que el radio vale <code>f(x)</code>: explica que, como el giro es
+                    alrededor del eje X, la distancia vertical desde la curva hasta el eje es
+                    justamente el valor de la función, y que por eso el radio es ese.
+                </p>
+                <p>
+                    Los pasos de integrar y evaluar muestran la primitiva <code>F(x)</code> y su
+                    sustitución en los dos límites, que es donde más se equivoca uno a mano.
+                </p>
+
+                <h3>Área frente a integral</h3>
+                <p>
+                    No son lo mismo, y la aplicación los muestra por separado cuando difieren.
+                    La <strong>integral definida</strong> lleva signo: lo que queda debajo del
+                    eje X cuenta como negativo. El <strong>área</strong> es siempre positiva,
+                    porque un área geométrica no puede ser negativa.
+                </p>
+                <p>
+                    El ejemplo más claro es <code>sin(x)</code> entre 0 y 2π: la integral vale 0,
+                    porque la mitad de arriba anula a la de abajo, mientras que el área vale 4.
+                </p>
+
+                <h3>Cuando las curvas se cruzan</h3>
+                <p>
+                    Si <em>f</em> y <em>g</em> se cruzan dentro del intervalo, cambia cuál va
+                    arriba, y una integral corrida restaría un tramo con otro. La aplicación
+                    parte la integral en los puntos de corte y suma los tramos en valor
+                    absoluto; el procedimiento explica dónde ocurrió y por qué hizo falta.
+                </p>
+
+                <h3>El resultado exacto</h3>
+                <p>
+                    Cuando el resultado es una fracción sencilla o un múltiplo de π, se muestra
+                    también en esa forma. En clase un volumen se deja escrito como
+                    <code>8π</code> y no como <code>25.132741</code>, y así se puede comparar
+                    directamente con el ejercicio hecho a mano.
+                </p>
+            </section>
+
+            <!-- ================= PROBLEMAS ================= -->
+            <section class="tarjeta">
+                <h2 class="tarjeta__titulo">Si algo sale mal</h2>
+
+                <h3>"Esto no se pudo determinar con suficiente certeza"</h3>
+                <p>
+                    El mensaje nombra el dato concreto que falta, y solo ese: todo lo demás ya
+                    está identificado un poco más arriba, en el resumen. Aparece después de
+                    haber agotado los seis caminos para deducir el intervalo, así que si pide
+                    los límites es porque de verdad no se pueden obtener de lo escrito.
+                </p>
+                <p>
+                    El caso más común es el eje de revolución. Ese no se deduce nunca: la misma
+                    región girada sobre dos rectas distintas produce sólidos distintos, y
+                    elegir uno sería inventarlo.
+                </p>
+
+                <h3>"Lecturas que conviene confirmar"</h3>
+                <p>
+                    No es un error ni un dato que falte: con esos datos se puede resolver. Lo
+                    que dice es que el enunciado admitía otra lectura razonable y se tomó una
+                    decisión por usted. Pasa, por ejemplo, cuando la curva corta el suelo a los
+                    dos lados de la recta que cierra la región: las dos mitades encierran
+                    región y solo una es la del ejercicio. Compruébelo y corrija los campos si
+                    hace falta.
+                </p>
+
+                <h3>"No se pudo identificar el tema del problema"</h3>
+                <p>
+                    No se encontró ninguna función en el texto. Revise que las funciones estén
+                    escritas con su encabezado, como <code>f(x) = ...</code>, o elija el tema a
+                    mano en el selector.
+                </p>
+
+                <h3>"No reconozco..."</h3>
+                <p>
+                    El nombre de la función está mal escrito o no está en la tabla de arriba.
+                </p>
+
+                <h3>"Falta cerrar un paréntesis"</h3>
+                <p>
+                    Cuente los paréntesis abiertos y cerrados. El programa coloca el cursor
+                    donde encontró el problema.
+                </p>
+
+                <h3>"No está definida en el intervalo"</h3>
+                <p>
+                    La función se sale de su dominio en el intervalo pedido. Por ejemplo,
+                    <code>ln(x)</code> necesita <em>x</em> mayor que cero, y
+                    <code>sqrt(x)</code> necesita <em>x</em> mayor o igual que cero.
+                </p>
+
+                <h3>"Se dispara al infinito"</h3>
+                <p>
+                    Hay una asíntota dentro del intervalo, como <code>1/x</code> entre −1 y 1.
+                    Esa integral no es una integral definida ordinaria; hay que tratarla como
+                    impropia, lo que queda fuera del alcance de esta aplicación.
+                </p>
+
+                <h3>"No se encontró una primitiva elemental"</h3>
+                <p>
+                    El integrando existe pero su primitiva no se puede escribir con las
+                    funciones del curso; pasa, por ejemplo, con productos que necesitarían
+                    integración por partes. La aplicación lo dice y calcula el valor por
+                    aproximación numérica: el número es fiable, pero en ese caso no hay
+                    procedimiento simbólico que copiar.
+                </p>
+
+                <h3>"No se pudo contactar al servidor"</h3>
+                <p>
+                    La aplicación de Java se cerró. Vuelva a ejecutarla desde la consola con
+                    <code>java -jar target/calculo2.jar</code> y recargue esta página.
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="pie-pagina">
+        <p>Universidad Mariano Gálvez de Guatemala — Cálculo II</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,160 @@
+/* ==================================================================
+   variables.css
+   Paleta de colores, tipografias y espaciados del proyecto.
+
+   Todo lo que se repite en la interfaz se define una sola vez aqui.
+   Cambiar un color en este archivo lo cambia en toda la aplicacion.
+   ================================================================== */
+
+:root {
+
+    /* --- Colores de marca ------------------------------------------
+       El azul identifica el area bajo la curva, el verde el area entre
+       dos curvas y el naranja los solidos de revolucion. Cada tema del
+       curso mantiene su color en el menu, en los titulos y en la grafica,
+       para que se sepa de un vistazo en que seccion se esta. */
+    --color-area:        #2563eb;
+    --color-area-suave:  #dbeafe;
+    --color-curvas:      #059669;
+    --color-curvas-suave:#d1fae5;
+    --color-solidos:     #ea580c;
+    --color-solidos-suave:#ffedd5;
+
+    /* --- Colores de la interfaz ------------------------------------ */
+    --color-fondo:          #f8fafc;
+    --color-superficie:     #ffffff;
+    --color-superficie-alt: #f1f5f9;
+    --color-borde:          #e2e8f0;
+    --color-borde-fuerte:   #cbd5e1;
+
+    --color-texto:          #0f172a;
+    --color-texto-suave:    #475569;
+    --color-texto-tenue:    #94a3b8;
+
+    /* --- Colores de estado ----------------------------------------- */
+    --color-error:        #dc2626;
+    --color-error-fondo:  #fef2f2;
+    --color-aviso:        #d97706;
+    --color-aviso-fondo:  #fffbeb;
+    --color-exito:        #16a34a;
+    --color-exito-fondo:  #f0fdf4;
+
+    /* --- Colores de la grafica -------------------------------------
+       Se eligieron distinguibles entre si tambien para quien no
+       diferencia el rojo del verde. */
+    --grafica-fondo:      #ffffff;
+    --grafica-ejes:       #64748b;
+    --grafica-rejilla:    #eef2f7;
+    --grafica-curva-f:    #2563eb;
+    --grafica-curva-g:    #db2777;
+    --grafica-relleno:    rgba(37, 99, 235, 0.18);
+    --grafica-rectangulo: rgba(234, 88, 12, 0.28);
+    --grafica-rectangulo-borde: #ea580c;
+    --grafica-corte:      #7c3aed;
+    /* Para la grafica interactiva: la reticula fina entre las lineas
+       principales, el segundo tono de la region cuando las curvas se
+       cruzan, las curvas completas del enunciado, las rectas que cierran
+       la region y los puntos de corte. */
+    --grafica-rejilla-fina: #f6f8fb;
+    --grafica-relleno-2:  rgba(219, 39, 119, 0.16);
+    --grafica-contexto:   #9aa8bb;
+    --grafica-frontera:   #0d9488;
+    --grafica-punto:      #1e293b;
+
+    /* --- Visor 3D ---------------------------------------------------
+       Los colores de GeoGebra, que son los que el estudiante conoce de
+       clase: X rojo, Y verde, Z azul, suelo gris y solido morado. */
+    --grafica3d-eje-x:    #cc0000;
+    --grafica3d-eje-y:    #008000;
+    --grafica3d-eje-z:    #0000cc;
+    --grafica3d-plano:    #808080;
+    --grafica3d-solido:   #6b4f96;
+    --grafica3d-malla:    #2a2233;
+
+    /* --- Tipografia ------------------------------------------------ */
+    --fuente-base: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --fuente-mono: "Cascadia Code", "Consolas", "SF Mono", "Menlo", monospace;
+
+    --texto-xs:   0.75rem;
+    --texto-sm:   0.875rem;
+    --texto-base: 1rem;
+    --texto-lg:   1.125rem;
+    --texto-xl:   1.375rem;
+    --texto-2xl:  1.75rem;
+    --texto-3xl:  2.25rem;
+
+    /* --- Espaciados ------------------------------------------------ */
+    --espacio-1: 0.25rem;
+    --espacio-2: 0.5rem;
+    --espacio-3: 0.75rem;
+    --espacio-4: 1rem;
+    --espacio-5: 1.5rem;
+    --espacio-6: 2rem;
+    --espacio-7: 3rem;
+
+    /* --- Bordes y sombras ------------------------------------------ */
+    --radio-sm: 6px;
+    --radio-md: 10px;
+    --radio-lg: 16px;
+
+    --sombra-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+    --sombra-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+    --sombra-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
+
+    /* --- Medidas -------------------------------------------------- */
+    --ancho-maximo: 1400px;
+    --ancho-panel:  380px;
+
+    --transicion: 160ms ease;
+}
+
+/* --- Tema oscuro ---------------------------------------------------
+   Se activa cuando el usuario pulsa el boton de tema. Solo se
+   redefinen los colores; los tamanos y espaciados no cambian. */
+[data-tema="oscuro"] {
+    --color-area-suave:   #1e3a5f;
+    --color-curvas-suave: #064e3b;
+    --color-solidos-suave:#7c2d12;
+
+    --color-fondo:          #0f172a;
+    --color-superficie:     #1e293b;
+    --color-superficie-alt: #263449;
+    --color-borde:          #334155;
+    --color-borde-fuerte:   #475569;
+
+    --color-texto:       #f1f5f9;
+    --color-texto-suave: #cbd5e1;
+    --color-texto-tenue: #94a3b8;
+
+    --color-error-fondo: #450a0a;
+    --color-aviso-fondo: #451a03;
+    --color-exito-fondo: #052e16;
+
+    --grafica-fondo:   #1e293b;
+    --grafica-ejes:    #94a3b8;
+    --grafica-rejilla: #2b3a52;
+    --grafica-curva-f: #60a5fa;
+    --grafica-curva-g: #f472b6;
+    --grafica-relleno: rgba(96, 165, 250, 0.22);
+    --grafica-rectangulo: rgba(251, 146, 60, 0.30);
+    --grafica-rectangulo-borde: #fb923c;
+    --grafica-corte:   #a78bfa;
+    --grafica-rejilla-fina: #233047;
+    --grafica-relleno-2: rgba(244, 114, 182, 0.20);
+    --grafica-contexto: #64748b;
+    --grafica-frontera: #2dd4bf;
+    --grafica-punto:    #f1f5f9;
+
+    /* Sobre fondo oscuro los tres ejes se aclaran, y la malla pasa a ser
+       clara: una reticula oscura desapareceria contra el fondo. */
+    --grafica3d-eje-x:  #f87171;
+    --grafica3d-eje-y:  #4ade80;
+    --grafica3d-eje-z:  #60a5fa;
+    --grafica3d-plano:  #94a3b8;
+    --grafica3d-solido: #a78bfa;
+    --grafica3d-malla:  #f5f3ff;
+
+    --sombra-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --sombra-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --sombra-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
+}

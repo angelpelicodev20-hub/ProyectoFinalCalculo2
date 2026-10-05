@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="es" data-tema="claro">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sólidos de revolución — Cálculo II</title>
+    <link rel="stylesheet" href="/css/estilos.css">
+    <script type="module" src="/js/main.js"></script>
+</head>
+
+<body data-pagina="solidos-revolucion">
+
+    <header class="barra-superior">
+        <a class="barra-superior__marca" href="/">
+            <span class="barra-superior__simbolo" aria-hidden="true">∫</span>
+            Cálculo II
+        </a>
+        <nav class="barra-superior__navegacion" aria-label="Secciones">
+            <a class="barra-superior__enlace" href="/pages/resolver.html">Resolver problema</a>
+            <a class="barra-superior__enlace" href="/pages/area-bajo-curva.html">Área bajo la curva</a>
+            <a class="barra-superior__enlace" href="/pages/area-entre-curvas.html">Área entre curvas</a>
+            <a class="barra-superior__enlace" href="/pages/solidos-revolucion.html">Sólidos de revolución</a>
+            <a class="barra-superior__enlace" href="/pages/calculadora.html">Calculadora</a>
+            <a class="barra-superior__enlace" href="/pages/ayuda.html">Ayuda</a>
+            <button class="boton-tema" id="botonTema" type="button" title="Cambiar tema">☾</button>
+        </nav>
+    </header>
+
+    <main class="contenedor">
+
+        <section class="encabezado-tema">
+            <div class="encabezado-tema__titulo">
+                <h1>Sólidos de revolución</h1>
+            </div>
+            <p class="encabezado-tema__descripcion">
+                Calcula el volumen del sólido que se forma al girar una región plana alrededor de una
+                recta. El sólido se dibuja en tres dimensiones y se puede girar arrastrando el ratón,
+                para ver de dónde sale cada radio de la fórmula.
+            </p>
+            <code class="encabezado-tema__formula">V = π ∫ desde a hasta b de [R(x)]² dx</code>
+        </section>
+
+        <div class="contenido">
+
+            <!-- ---------------- FORMULARIO ---------------- -->
+            <section class="panel-formulario">
+                <form class="tarjeta" id="formulario" novalidate>
+                    <h2 class="tarjeta__titulo">Datos del ejercicio</h2>
+
+                    <div class="columna">
+
+                        <div class="campo">
+                            <label for="tipoSolido">Método</label>
+                            <select class="campo__control" id="tipoSolido" name="tipoSolido"></select>
+                            <div class="campo__ayuda" id="descripcionSolido"></div>
+                        </div>
+
+                        <div class="campo">
+                            <label for="funcionF">Curva que gira</label>
+                            <input class="campo__control campo__control--funcion"
+                                   id="funcionF" name="funcionF" type="text"
+                                   value="sqrt(x)" autocomplete="off" spellcheck="false"
+                                   aria-describedby="ayudaFuncionF">
+                            <div class="campo__ayuda" id="ayudaFuncionF">
+                                En arandelas, ésta es la curva del radio exterior.
+                            </div>
+                            <div class="campo__error" id="errorFuncionF" role="alert"></div>
+                            <div id="teclado"></div>
+                        </div>
+
+                        <div class="campo oculto" id="grupoFuncionG">
+                            <label for="funcionG">Segunda curva</label>
+                            <input class="campo__control campo__control--funcion"
+                                   id="funcionG" name="funcionG" type="text"
+                                   value="" autocomplete="off" spellcheck="false"
+                                   aria-describedby="ayudaFuncionG">
+                            <div class="campo__ayuda" id="ayudaFuncionG">
+                                En arandelas, la curva que delimita el agujero. En capas, la frontera
+                                inferior de la región; déjela vacía si la región llega hasta el eje X.
+                            </div>
+                            <div class="campo__error" id="errorFuncionG" role="alert"></div>
+                        </div>
+
+                        <div class="fila">
+                            <div class="campo">
+                                <label for="eje">Eje de revolución</label>
+                                <select class="campo__control" id="eje" name="eje">
+                                    <option value="x">Horizontal (y = k)</option>
+                                    <option value="y">Vertical (x = k)</option>
+                                </select>
+                            </div>
+                            <div class="campo">
+                                <label for="desplazamientoEje">Valor de k</label>
+                                <input class="campo__control" id="desplazamientoEje"
+                                       name="desplazamientoEje" type="number" step="any" value="0">
+                            </div>
+                        </div>
+                        <div class="campo__ayuda" style="margin-top: -0.5rem;">
+                            Con k = 0 el giro es sobre el eje coordenado. Use otro valor para girar
+                            sobre una recta corrida, por ejemplo y = 2.
+                        </div>
+
+                        <div class="casilla">
+                            <input id="limitesAutomaticos" name="limitesAutomaticos" type="checkbox">
+                            <label for="limitesAutomaticos">Buscar los límites</label>
+                        </div>
+                        <div class="campo__ayuda" style="margin-top: -0.5rem;">
+                            Marquelo si no conoce los limites y la region queda encerrada entre las
+                            dos curvas. La aplicacion los obtiene de sus intersecciones y le
+                            muestra como los encontro.
+                        </div>
+
+                        <div class="fila" id="grupoLimites">
+                            <div class="campo">
+                                <label for="limiteInferior">Límite inferior (a)</label>
+                                <input class="campo__control" id="limiteInferior"
+                                       name="limiteInferior" type="number" step="any" value="0">
+                            </div>
+                            <div class="campo">
+                                <label for="limiteSuperior">Límite superior (b)</label>
+                                <input class="campo__control" id="limiteSuperior"
+                                       name="limiteSuperior" type="number" step="any" value="4">
+                            </div>
+                        </div>
+                        <div class="campo__error" id="errorLimites" role="alert"></div>
+
+                        <button class="boton boton--principal boton--ancho"
+                                id="botonCalcular" type="submit">Calcular</button>
+
+                        <button class="boton boton--secundario boton--ancho"
+                                id="botonLimpiar" type="button">Limpiar</button>
+
+                    </div>
+                </form>
+
+                <section class="tarjeta">
+                    <h2 class="tarjeta__titulo">Ejemplos</h2>
+                    <p class="campo__ayuda" style="margin-top: 0;">
+                        Los dos primeros son los ejercicios del material del curso.
+                    </p>
+                    <div id="ejemplos"></div>
+                </section>
+            </section>
+
+            <!-- ---------------- RESULTADOS ---------------- -->
+            <section class="panel-resultados" id="zonaResultados">
+
+                <div id="mensajes" class="oculto"></div>
+                <div id="advertencia" class="oculto"></div>
+                <div id="resultado"></div>
+
+                <section class="tarjeta">
+                    <div class="grafica">
+                        <div class="grafica__cabecera">
+                            <h2 style="margin: 0;">La región que gira</h2>
+                        </div>
+
+                        <p class="campo__ayuda" style="margin-top: 0;">
+                            Antes del sólido conviene mirar la región en el plano: es de donde
+                            sale todo. La zona sombreada es lo que gira, las líneas de puntos
+                            marcan los límites de integración y la línea a trazos es el eje de
+                            revolución. La distancia de cada borde a ese eje es el radio de la
+                            fórmula.
+                        </p>
+
+                        <p class="campo__ayuda" style="margin-top: 0;">
+                            Arrastre para mover la vista y use la rueda para acercar o alejar;
+                            al pasar el puntero por una curva se leen sus coordenadas.
+                        </p>
+
+                        <div class="grafica__lienzo-caja">
+                            <canvas class="grafica__lienzo" id="graficaRegion" role="img"
+                                    aria-label="Región plana que se hace girar, con su eje de revolución"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="tarjeta">
+                    <div class="grafica">
+                        <div class="grafica__cabecera">
+                            <h2 style="margin: 0;">El sólido</h2>
+                            <div class="grafica__controles">
+                                <button class="boton boton--secundario boton--pequeno"
+                                        id="botonReiniciarVista" type="button">Centrar vista</button>
+                                <button class="boton boton--secundario boton--pequeno"
+                                        id="botonDescargar" type="button">Descargar PNG</button>
+                                <button class="boton boton--secundario boton--pequeno"
+                                        id="botonImprimir" type="button">Imprimir</button>
+                            </div>
+                        </div>
+
+                        <div class="mono" id="planteamiento"
+                             style="color: var(--color-texto-suave);"></div>
+
+                        <div class="grafica__lienzo-caja">
+                            <canvas class="grafica__lienzo grafica__lienzo--tresd" id="grafica"
+                                    role="img"
+                                    aria-label="Vista tridimensional del sólido de revolución"></canvas>
+                            <div class="grafica__lectura" id="lectura"></div>
+                        </div>
+
+                        <p class="campo__ayuda">
+                            Arrastre para girar el sólido; con Shift o el botón derecho se desplaza.
+                            La rueda acerca y aleja, y los botones de la derecha vuelven a la vista
+                            inicial o abren la pantalla completa.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="tarjeta">
+                    <div id="explicacionLimites" class="oculto" style="margin-bottom: 1.5rem;"></div>
+                    <h2 class="tarjeta__titulo">Procedimiento paso a paso</h2>
+                    <div id="pasos"></div>
+                </section>
+
+                <details class="plegable">
+                    <summary>Detalle por rebanadas</summary>
+                    <div class="plegable__cuerpo">
+                        <p class="campo__ayuda" style="margin-top: 0;">
+                            El radio del sólido en varios puntos del intervalo. Sirve para comprobar
+                            a mano que el planteamiento es correcto antes de confiar en el resultado.
+                        </p>
+                        <div id="rebanadas"></div>
+                    </div>
+                </details>
+
+            </section>
+        </div>
+    </main>
+
+    <footer class="pie-pagina">
+        <p>Universidad Mariano Gálvez de Guatemala — Cálculo II</p>
+    </footer>
+
+</body>
+</html>
